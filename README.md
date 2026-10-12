@@ -4,6 +4,8 @@
 
 # BTR Desktop
 
+> 此 fork 的 macOS 适配说明：[macos/README.md](macos/README.md)。上游 Windows 安装方式见下文。
+
 **Bilibili 线程撕裂者的桌面版，适用于官方哔哩哔哩 Windows 客户端**
 
 把线程撕裂者带到官方 Windows 客户端里，原本的播放器、字幕、弹幕和快捷键都保留
@@ -32,7 +34,7 @@
 
 ## 📦 安装
 
-桌面版只支持 Windows。不会有 macOS 版：维护和安装都太困难。Mac 用户请使用 [网页版](https://github.com/MrTangLuyao/Bilibili-thread-ripper)。
+以下脚本只支持 Windows。macOS 版请参阅 [macOS 安装说明](macos/README.md)。
 
 1. 先安装好官方哔哩哔哩 Windows 客户端。
 2. 右键左下角的 Windows 徽标，选择 **终端**（Windows 11）或 **PowerShell**（更早的 Windows，或者没有终端的版本）。普通权限和管理员身份运行都可以。

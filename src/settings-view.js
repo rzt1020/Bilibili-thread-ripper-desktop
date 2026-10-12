@@ -53,9 +53,11 @@
         <div class="btr-row btr-live-row"><label><input type="checkbox" id="btr-desktop-live" disabled>直播加速（敬请期待）</label><span class="btr-note btr-inline">直播加速已可在网页版中使用</span></div>
         <div class="btr-row"><label><input type="checkbox" data-setting="errorNotices">显示错误</label><label><input type="checkbox" data-setting="debugNotices">Debug 模式</label></div>
         <div class="btr-debug-wrap" hidden><div class="btr-row"><button type="button" data-select="all">全选</button><button type="button" data-select="none">全不选</button></div><div class="btr-debug-options"></div></div>
-        <div class="btr-row"><label><input type="checkbox" data-setting="autoCheckUpdates">自动检查 BTR 更新</label></div>
+        ${root.__BTR_PLATFORM__ === "darwin"
+          ? '<div class="btr-note">macOS 版通过 BTR 源码目录中的 macos/cli.cjs 安装或卸载。</div>'
+          : `<div class="btr-row"><label><input type="checkbox" data-setting="autoCheckUpdates">自动检查 BTR 更新</label></div>
         <div class="btr-row"><button type="button" id="btr-desktop-check-update">检查 BTR 更新</button><button type="button" id="btr-desktop-uninstall">卸载 BTR</button><button type="button" id="btr-desktop-install-update" hidden>安装更新</button></div>
-        <div class="btr-note btr-update-status" role="status"></div><div class="btr-note btr-save-error" role="status"></div>`;
+        <div class="btr-note btr-update-status" role="status"></div>`}<div class="btr-note btr-save-error" role="status"></div>`;
       for (const [key, title] of Object.entries(api.categories)) {
         const label = document.createElement("label"), input = document.createElement("input");
         input.type = "checkbox"; input.dataset.category = key; label.append(input, title); panel.querySelector(".btr-debug-options").append(label);
@@ -128,7 +130,7 @@
         panel.querySelector(".btr-threads-row").classList.toggle("btr-auto", settings.autoConcurrency);
         panel.querySelector(".btr-debug-wrap").hidden = !settings.debugNotices;
       });
-      unsubscribeUpdate = api.onUpdate(update => {
+      if (root.__BTR_PLATFORM__ !== "darwin") unsubscribeUpdate = api.onUpdate(update => {
         panel.querySelector(".btr-update-status").textContent = update.message;
         const busy = ["confirming","installing","uninstalling"].includes(update.state);
         panel.querySelector("#btr-desktop-check-update").disabled = busy || update.state === "checking";
