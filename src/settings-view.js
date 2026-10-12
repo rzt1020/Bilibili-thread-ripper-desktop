@@ -32,7 +32,8 @@
     scheduled = false;
     const general = document.querySelector(".app_settings .settings_content--item.theme-item");
     const catalog = document.querySelector(".app_settings .settings_catalog");
-    if (!general || !catalog) return;
+    // macOS 1.17.x uses a continuous settings page without the Windows catalog.
+    if (!general || (root.__BTR_PLATFORM__ !== "darwin" && !catalog)) return;
     if (!panel?.isConnected) {
       unsubscribe?.(); unsubscribeUpdate?.();
       panel = document.createElement("section"); panel.id = "btr-desktop-settings"; panel.className = "settings_content--item";
@@ -140,7 +141,7 @@
         install.textContent = update.manifest ? `更新到 ${update.manifest.version}` : "安装更新";
       });
     }
-    if (!navButton?.isConnected) {
+    if (catalog && !navButton?.isConnected) {
       navButton = document.createElement("button"); navButton.type = "button"; navButton.id = "btr-desktop-nav";
       navButton.className = "settings_catalog--item text_ellipsis"; navButton.textContent = "线程撕裂者";
       catalog.prepend(navButton);
